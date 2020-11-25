@@ -1,0 +1,49 @@
+<odoo>
+<!-- Form View -->
+    <record id="tk_job_position_view_form" model="ir.ui.view">
+        <field name="name">tk_job_position</field>
+        <field name="model">tk_job.job</field>
+        <field name="arch" type="xml">
+            <form string="Job">
+                <header>
+                    <button name="submit" string="Submit" states="draft" type="object" class="oe_highlight"/>
+                    <button name="approved" string="Approved" states="submit" type="object" class="oe_highlight" groups="tk_job_position.group_assessor"/>
+                    <button name="cancel" string="Cancel" states="submit" type="object" class="oe_highlight" groups="tk_job_position.group_assessor"/>
+                    <button name="uncancel" string="Uncancel" states="cancel" type="object" class="oe_highlight" groups="tk_job_position.group_assessor"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit"/>
+                </header>
+                <sheet>
+                    <group string="Vị trí công việc">
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" options="{'no_create': True,'no_open': True}"/>
+                            <field name="department_id" domain="[('company_id', '=', company_id)]" options="{'no_create': True,'no_open': True}"/>
+                            <field name="set_criterias_id" domain="[('name','!=','')]"/>
+                        </group>
+                        <group>
+                            <field name="create_uid" />
+                            <field name="created_at" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                </div>
+            </form>
+        </field>
+    </record>
+<!-- Action and menu -->
+    <record id="tk_job_position_action" model="ir.actions.act_window">
+        <field name="name">Vị trí công việc</field>
+        <field name="res_model">tk_job.job</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="tk_job_position_menu" 
+        name="Vị trí công việc" 
+        parent="hr_recruitment.menu_hr_recruitment_root" 
+        action="tk_job_position_action"/>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+      id="tk_recruitment_hr_menu"
+      name="Đánh giá nhân sự"
+      parent="hr_recruitment.menu_hr_recruitment_root"/>
+    
+    <menuitem
+      id="tk_recruitment_menu"
+      name="Phỏng vấn"
+      parent="tk_recruitment_hr_menu"/>
+    
+    <menuitem
+      id="tk_hr_menu"
+      name="Thử việc"
+      parent="tk_recruitment_hr_menu"/>
+</odoo>

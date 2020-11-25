@@ -1,0 +1,296 @@
+<odoo>
+<!-- Search View -->
+    <record id="tk_recruitment_hr_set_criterias_view_search" model="ir.ui.view">
+        <field name="name">tk_recruitment_hr_set_criterias_view_search</field>
+        <field name="model">tk_recruitment_hr.set_criterias</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Tên tiêu chí"/>
+                <field name="job_line_ids" string="Vị trí công việc" />
+                <field name="group_criterias_line_ids" string="Nhóm tiêu chí" />
+                <field name="description" string="Mô tả" />
+                <filter string="Các bộ tiêu chí không hoạt động" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By" name = "group by status">
+                    <filter string="Trạng thái" 
+                    context="{'group_by': 'active', }"
+                    help="Status"/>
+                </group>
+            </search>
+        </field>
+    </record>
+<!-- Form View -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_set_criterias_view_form" model="ir.ui.view">
+            <field name="name">Set_Criterias</field>
+            <field name="model">tk_recruitment_hr.set_criterias</field>
+            <field name="arch" type="xml">
+                <form string="Set Criterias">
+                    <sheet>
+                        <group string="Bộ Tiêu chí">
+                            <group>
+                                <field name="name" string="Tên bộ tiêu chí"/>
+                                <field name="order" string="Thứ tự"/>
+                                <field name="active" string="Trạng thái"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" string="Mô tả" />
+                        </group>
+                        <notebook>
+                            <page name="group_criterias" string="Nhóm tiêu chí">
+                                <field name="group_criterias_line_ids" type="xml" domain="[('type','=','R'),('name','!=','')]" options="{'no_create': True}">
+                                    <tree string="Group Criterias">
+                                        <field name="name" string="Tên nhóm" options="{'no_open': True}"/>
+                                        <field name="active"/>
+                                        <field name="description" string="Mô tả"/>
+                                    </tree>
+                                    <form string="Group Criterias">
+                                        <sheet>
+                                            <group string="Nhóm tiêu chí">
+                                                <group>
+                                                    <field name="name" string="Tên nhóm" readonly="1"/>
+                                                    <field name="order" string="Thứ tự" readonly="1"/>
+                                                    <field name="active" string="Trạng thái" readonly="1"/>
+                                                </group>
+                                            </group>
+                                                <group>
+                                                    <field name="description" string="Mô tả" readonly="1"/>
+                                                </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="group_criterias" string="Tiêu chí">
+                                <field name="criterias_line_ids" type="xml">
+                                    <tree string="Group Criterias" editable="bottom">
+                                        <field name="criterias_id" string="Tên tiêu chí" domain="[('group_criterias_id','in',parent.group_criterias_line_ids),('id','not in',parent.criterias_ids)]" options="{'no_create': True,'no_open': True}" />
+                                        <field name="group_criterias_id" string="Tên nhóm" readonly='1' options="{'no_open': True}"/>
+                                        <field name="description" string="Mô tả" readonly='1'/>
+                                        <field name="rating_weight" string="Trọng số"/>
+                                    </tree>
+                                    <form string="Set Criterias">
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="group_criterias_id"  options="{ 'no_open': True}" />
+                                                    <field name="criterias_id"  options="{ 'no_open': True}" />
+                                                    <field name="rating_weight"/>
+                                                    <field name="description" />
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="test" string="test" invisible="True">
+                                <field name="criterias_ids"/>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page name="job_position" string="Vị trí công việc">
+                                <field name="job_line_ids" options="{'no_create': True}" type="xml">
+                                    <tree string="Job">
+                                        <field name="company_id" string="Công ty"/>
+                                        <field name="department_id" string="Phòng ban"/>
+                                        <field name="name" strign="Vị trí"/>
+                                    </tree>
+                                    <form>
+                                        <header>
+                                            <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+                                        </header>
+                                        <sheet>
+                                            <div class="oe_button_box" name="button_box"/>
+                                            <div class="oe_title">
+                                                <label for="name" class="oe_edit_only"/>
+                                                <h1><field name="name" placeholder="e.g. Sales Manager"/></h1>
+                                            </div>
+                                            <group>
+                                                <group string="Recruitment" name="recruitment">
+                                                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                                    <field name="department_id"/>
+                                                    <field name="no_of_recruitment"/>
+                                                </group>
+                                            </group>
+                                            <div attrs="{'invisible': [('state', '!=', 'recruit')]}">
+                                                <label for="description"/>
+                                                <field name="description"/>
+                                            </div>
+                                        </sheet>
+                                        <div class="oe_chatter">
+                                            <field name="message_follower_ids" widget="mail_followers"/>
+                                        </div>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    <!-- HR -->
+        <record id="tk_hr_set_criterias_view_form" model="ir.ui.view">
+            <field name="name">Set_Criterias</field>
+            <field name="model">tk_recruitment_hr.set_criterias</field>
+            <field name="arch" type="xml">
+                <form string="Set Criterias">
+                    <sheet>
+                        <group string="Bộ Tiêu chí">
+                            <group>
+                                <field name="name" string="Tên bộ tiêu chí"/>
+                                <field name="order" string="Thứ tự"/>
+                                <field name="active" string="Trạng thái"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" string="Mô tả" />
+                        </group>
+                        <notebook>
+                            <page name="group_criterias" string="Nhóm tiêu chí">
+                                <field name="group_criterias_line_ids" type="xml" domain="[('type','=','H'),('name','!=','')]" options="{'no_create': True}">
+                                    <tree string="Group Criterias">
+                                        <field name="name" string="Tên nhóm" options="{'no_open': True}"/>
+                                        <field name="description" string="Mô tả"/>
+                                    </tree>
+                                    <form string="Group Criterias">
+                                        <sheet>
+                                            <group string="Nhóm tiêu chí">
+                                                <group>
+                                                    <field name="name" string="Tên nhóm" readonly="1"/>
+                                                    <field name="order" string="Thứ tự" readonly="1"/>
+                                                    <field name="active" string="Trạng thái" readonly="1"/>
+                                                </group>
+                                            </group>
+                                                <group>
+                                                    <field name="description" string="Mô tả" readonly="1"/>
+                                                </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="group_criterias" string="Tiêu chí">
+                                <field name="criterias_line_ids" type="xml">
+                                    <tree string="Group Criterias" editable="bottom">
+                                        <field name="criterias_id" string="Tên tiêu chí" domain="[('group_criterias_id','in',parent.group_criterias_line_ids),('id','not in',parent.criterias_ids)]" options="{'no_create': True,'no_open': True}"/>
+                                        <field name="group_criterias_id" string="Tên nhóm" readonly='1' options="{'no_open': True}"/>
+                                        <field name="description" string="Mô tả" readonly='1'/>
+                                        <field name="rating_weight" string="Trọng số"/>
+                                    </tree>
+                                    <form string="Set Criterias">
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="group_criterias_id"  options="{ 'no_open': True}" />
+                                                    <field name="criterias_id"  options="{ 'no_open': True}" />
+                                                    <field name="rating_weight"/>
+                                                    <field name="description" />
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="test" string="test" invisible="True">
+                                <field name="criterias_ids"/>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page name="job_position" string="Vị trí công việc">
+                                <field name="job_line_ids" options="{'no_create': True}" type="xml">
+                                    <tree string="Job">
+                                        <field name="company_id" string="Công ty"/>
+                                        <field name="department_id" string="Phòng ban"/>
+                                        <field name="name" strign="Vị trí"/>
+                                    </tree>
+                                    <form>
+                                        <header>
+                                            <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+                                        </header>
+                                        <sheet>
+                                            <div class="oe_button_box" name="button_box"/>
+                                            <div class="oe_title">
+                                                <label for="name" class="oe_edit_only"/>
+                                                <h1><field name="name" placeholder="e.g. Sales Manager"/></h1>
+                                            </div>
+                                            <group>
+                                                <group string="Recruitment" name="recruitment">
+                                                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                                    <field name="department_id"/>
+                                                    <field name="no_of_recruitment"/>
+                                                </group>
+                                            </group>
+                                            <div attrs="{'invisible': [('state', '!=', 'recruit')]}">
+                                                <label for="description"/>
+                                                <field name="description"/>
+                                            </div>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+<!-- Tree View -->
+    <record id="tk_recruitment_hr_set_criterias_view_tree" model="ir.ui.view">
+      <field name="name">tk_recruitment_hr.set_criterias_view_tree</field>
+      <field name="model">tk_recruitment_hr.set_criterias</field>
+      <field name="arch" type="xml">
+        <tree default_order='order'>
+            <field name="name" string="Tên bộ"/>
+            <field name="description" string="Mô tả"/>
+            <field name="job_line_ids" string="Vị trí công việc" widget="many2many_tags"/>
+            <field name="active" string="Trạng thái"/>
+        </tree>
+      </field>
+    </record>
+
+<!-- Action and menu -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_set_criterias_action" model="ir.actions.act_window">
+            <field name="name">Bộ tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.set_criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','R')]</field>
+            <field name="context">{'default_type':'R'}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_recruitment_hr_set_criterias_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_recruitment_set_criterias_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_recruitment_hr_set_criterias_menu"
+            name="Bộ tiêu chí"
+            parent="tk_recruitment_menu"
+            action="tk_recruitment_set_criterias_action"/>
+    <!-- HR -->
+        <record id="tk_hr_set_criterias_action" model="ir.actions.act_window">
+            <field name="name">Bộ tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.set_criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','H')]</field>
+            <field name="context">{'default_type':'H'}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_recruitment_hr_set_criterias_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_hr_set_criterias_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_hr_set_criterias_menu"
+            name="Bộ tiêu chí"
+            parent="tk_hr_menu"
+            action="tk_hr_set_criterias_action"/>
+    </data>
+</odoo>

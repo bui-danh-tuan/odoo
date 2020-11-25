@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- category view -->
+  <data>
+    <record id="hr_recruitment_criteria_category_action" model="ir.actions.act_window">
+      <field name="name">Danh sách mẫu đánh giá</field>
+      <field name="res_model">hr.recruitment.criteria_category</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="hr_recruitment_criteria_category_view_form" model="ir.ui.view">
+      <field name="name">hr.recruitment.criteria_category.view.form</field>
+      <field name="model">hr.recruitment.criteria_category</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="description" style="high:200%%"/>
+              </group>
+            </group>
+            <notebook>
+              <page name="knowledge" string="Kiến thức">
+                <field name= "knowledge_category_line_ids" type = "xml">
+                  <tree string="Criteria" editable="bottom" delete="true" create="true">
+                    <field name="criteria_id" attrs="{'readonly': [('id', '!=', False)]}" widget="selection" domain="[('type','=','knowledge')]" />
+                    <field name="description"/>
+                    <field name="rating_weight"/>
+                  </tree>
+                </field>
+              </page>
+              <page name="skill" string="Kĩ năng">
+                <field name= "skill_category_line_ids" type = "xml">
+                  <tree string="Criteria" editable="bottom" delete="true" create="true">
+                    <field name="criteria_id" attrs="{'readonly': [('id', '!=', False)]}" widget="selection" domain="[('type','=','skill')]"/>
+                    <field name="description" />
+                    <field name="rating_weight"/>
+                  </tree>
+                </field>
+              </page>
+              <page name="spirit" string="Thái độ">
+                <field name= "spirit_category_line_ids" type = "xml">
+                  <tree string="Criteria" editable="bottom" delete="true" create="true">
+                    <field name="criteria_id" attrs="{'readonly': [('id', '!=', False)]}" widget="selection" domain="[('type','=','spirit')]"/>
+                    <field name="description" />
+                    <field name="rating_weight"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="hr_recruitment_criteria_category_view_tree" model="ir.ui.view">
+      <field name="name">hr.recruitment.criteria_category.view.form</field>
+      <field name="model">hr.recruitment.criteria_category</field>
+      <field name="arch" type="xml">
+        <tree string="Bản đánh giá">
+          <field name="name"/>
+          <field name="description"/>
+          <field name="category_line_ids" string="Số tiêu chí" />
+        </tree>
+      </field>
+    </record>
+
+    <menuitem id="hr_recruitment_criteria_category_menu" name="Criteria category" parent="hr_recruitment_menu" action="hr_recruitment_criteria_category_action"/>
+  </data>
+  <!-- category line view-->
+  <data>
+    <record id="hr_recruitment_criteria_category_line_action" model="ir.actions.act_window">
+      <field name="name">hr_recruitment_criteria_category_line_action</field>
+      <field name="res_model">hr.recruitment.criteria_category_line</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="hr_recruitment_criteria_category_line_view_form" model="ir.ui.view">
+      <field name="name">hr.recruitment.criteria_category_line.view.form</field>
+      <field name="model">hr.recruitment.criteria_category_line</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="criteria_id"  attrs="{'readonly': [('id', '!=', False)]}" options="{ 'no_open': True}"/>
+                <field name="type" />
+              </group>
+              <group>
+                <field name="rating_weight" />
+                <field name="description_" />
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

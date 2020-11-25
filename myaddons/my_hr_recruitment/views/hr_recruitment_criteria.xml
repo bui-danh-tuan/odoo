@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="hr_recruitment_criteria_view_form" model="ir.ui.view">
+      <field name="name">hr.recruitment.criteria.view.form</field>
+      <field name="model">hr.recruitment.criteria</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="type"/>
+              </group>
+            </group>
+            <group>
+               <field name="description" style="high:200%%"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="hr_recruitment_criteria_search_view" model="ir.ui.view">
+        <field name="name">hr.recruitment.criteria.view.search</field>
+        <field name="model">hr.recruitment.criteria</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="type" />
+                <group expand="0" string="Group By" name = "group by type">
+                    <filter string="Type" 
+                    context="{'group_by': 'type', }"
+                    help="Type"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_recruitment_criteria_view_kanban">
+        <field name="name">Kanban</field>
+        <field name="model">hr.recruitment.criteria</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="type">
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban" type="open">
+                            <div class="kanban_name" name="name">
+                                <h4>
+                                    <a>
+                                        <field name="name"/>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="kanban_type" name="tupe">
+                                <p>
+                                  <field name="description"/>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="hr_recruitment_criteria_tree_view" model="ir.ui.view">
+      <field name="name">Tree</field>
+        <field name="model">hr.recruitment.criteria</field>
+        <field name="arch" type="xml">
+          <tree string="Caption" create="true" delete="true" edit="true" editable="bottom">
+              <field name="name"/>
+              <field name="type"/>
+              <field name="description"/>
+          </tree>
+        </field>
+    </record>
+    <record id="hr_recruitment_criteria_action" model="ir.actions.act_window">
+        <field name="name">Danh sách tiêu chí đánh giá</field>
+        <field name="res_model">hr.recruitment.criteria</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="hr_recruitment_criteria_view_kanban"/>
+    </record>
+    
+    <menuitem
+      id="hr_recruitment_criteria_menu"
+      name="Criteria"
+      parent="hr_recruitment_menu"
+      action="hr_recruitment_criteria_action"/>
+  </data>
+</odoo>

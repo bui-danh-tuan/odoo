@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+      id="hr_recruitment_menu"
+      name="Criteria"
+      parent="hr_recruitment.menu_hr_recruitment_root"/>
+</odoo>

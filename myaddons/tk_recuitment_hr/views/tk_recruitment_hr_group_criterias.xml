@@ -1,0 +1,99 @@
+<odoo>
+<!-- Search View -->
+    <record id="tk_recruitment_hr_group_criterias_view_search" model="ir.ui.view">
+        <field name="name">tk_recruitment_hr_group_criterias_view_search</field>
+        <field name="model">tk_recruitment_hr.group_criterias</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Tên nhóm"/>
+                <field name="description" string="Mô tả"/>
+                <filter string="Các nhóm không hoạt động" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By" name = "group by type">
+                    <filter string="Type" 
+                    context="{'group_by': 'type', }"
+                    help="Type"/>
+                </group>
+                <group expand="0" string="Group By" name = "group by status">
+                    <filter string="Trạng thái" 
+                    context="{'group_by': 'active', }"
+                    help="Trạng thái"/>
+                </group>
+            </search>
+        </field>
+    </record>
+<!-- Tree View -->
+    <record id="tk_recruitment_hr_group_criterias_view_tree" model="ir.ui.view">
+      <field name="name">tk_recruitment_hr_group_criterias_view_tree</field>
+      <field name="model">tk_recruitment_hr.group_criterias</field>
+      <field name="arch" type="xml">
+        <tree default_order='order' editable="bottom">
+            <field name="order" string="STT"/>
+            <field name="name" string="Tên nhóm"/>
+            <!-- <field name="type"/> -->
+            <field name="description" string="Mô tả"/>
+            <field name="active" string="Trạng thái"/>            
+            <!-- <field name="created_at" />
+            <field name="create_uid" />
+            <field name="update_at" />
+            <field name="update_uid" /> -->
+        </tree>
+      </field>
+    </record>
+<!-- Form View -->
+    <record id="tk_recruitment_hr_group_criterias_view_form" model="ir.ui.view">
+      <field name="name">tk_recruitment_hr_group_criterias_view_form</field>
+      <field name="model">tk_recruitment_hr.group_criterias</field>
+      <field name="arch" type="xml">
+        <form string="Group Criterias">
+            <sheet>
+                <group string="Nhóm tiêu chí">
+                    <group>
+                        <field name="name" string="Tên nhóm"/>
+                        <!-- <field name="type"/> -->
+                        <field name="order" string="Thứ tự"/>
+                        <field name="active" string="Trạng thái"/>
+                    </group>
+                </group>
+                    <group>
+                        <field name="description" string="Mô tả" />
+                    </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+      </field>
+    </record>
+<!-- Action and menu -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_group_criterias_action" model="ir.actions.act_window">
+            <field name="name">Nhóm tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.group_criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','R')]</field>
+            <field name="context">{'default_type':'R'}</field>
+        </record>
+        <menuitem
+            id="tk_recruitment_hr_group_criterias_menu"
+            name="Nhóm tiêu chí"
+            parent="tk_recruitment_menu"
+            action="tk_recruitment_group_criterias_action"/>
+    <!-- HR -->
+        <record id="tk_hr_group_criterias_action" model="ir.actions.act_window">
+            <field name="name">Nhóm tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.group_criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','H')]</field>
+            <field name="context">{'default_type':'H'}</field>
+        </record>
+        <menuitem
+            id="tk_hr_group_criterias_menu"
+            name="Nhóm tiêu chí"
+            parent="tk_hr_menu"
+            action="tk_hr_group_criterias_action"/>
+    </data>
+</odoo>

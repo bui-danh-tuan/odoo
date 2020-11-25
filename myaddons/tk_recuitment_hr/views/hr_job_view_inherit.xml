@@ -1,0 +1,70 @@
+<odoo>
+<!-- Tree View -->
+    <record id="view_hr_job_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.job.tree.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                 <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+<!-- Form View -->
+    <record id="view_hr_job_form_inherit" model="ir.ui.view">
+        <field name="name">hr.form.tree.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                 <attribute name="create">false</attribute>
+            </xpath>
+            <xpath expr="//field[@name='no_of_recruitment']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                 <field name="set_criterias_id" string="Bộ tiêu chí"  />
+            </xpath>
+            <xpath expr="//group[@name='offer']" position="replace">
+                 <group string="Creator">
+                    <field name="create_uid" />
+                    <field name="created_at" />
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='address_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='alias_def']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='alias_name']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+<!-- Kanban View HR -->
+    <record id="view_hr_job_kanban_inherit" model="ir.ui.view">
+        <field name="name">hr.form.kanban.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.hr_job_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                 <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+<!-- Kanban View HR Recuritment -->
+    <record id="view_hr_job_kanban_inherit" model="ir.ui.view">
+        <field name="name">hr.job.kanban.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr_recruitment.view_hr_job_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                 <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

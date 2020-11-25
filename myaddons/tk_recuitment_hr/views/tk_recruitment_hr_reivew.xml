@@ -1,0 +1,167 @@
+<odoo>
+<!-- Form View -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_review_view_form" model="ir.ui.view">
+            <field name="name">tk_recruitment_review_view_form</field>
+            <field name="model">tk_recruitment_hr.review</field>
+            <field name="arch" type="xml">
+                <form string="Review">
+                    <header>
+                        <button name="action_print_pdf" string="Print pdf" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group string="Bản đánh giá">
+                            <group>
+                                <field name="create_uid" string="Người đánh giá"/>
+                                <field name="created_at" string="Ngày đánh giá"/>
+                                <field name="order" string="Thứ tự"/>
+                                <field name="active" string="Trạng thái"/>
+                                <field name="set_criterias_id" string="Bộ tiêu chí" domain="[('name','!=',''),('type','=','R')]" widget="selection"/>
+                            </group>
+                            <!-- <group>
+                                <field name="applicant_id" string="Hồ sơ ứng viên" options="{'no_create': True,'no_open': True}"/>
+                                <field name="applicant_partner_name" string="Tên ứng viên" readonly="1"/>
+                                <field name="applicant_company" string="Công ty" readonly="1" options="{'no_open': True}"/>
+                                <field name="applicant_department" string="Phòng ban" readonly="1" options="{'no_open': True}"/>
+                                <field name="applicant_job" string="Vị trí" readonly="1" options="{'no_open': True}"/>
+                            </group> -->
+                        </group>
+                        <group>
+                            <field name="description" string="Ghi chú" />
+                        </group>
+                        <notebook>
+                            <page name="criterias" string="Tiêu chí đánh giá">
+                                <field name="reivew_line_ids" type="xml">
+                                    <tree string="Criterias" editable="bottom" delete="false" create="false">
+                                        <field name="group_criterias_id" string="Nhóm tiêu chí" attrs="{'readonly': [('id', '!=', False)]}" options="{'no_open': True}"/>
+                                        <field name="criterias_id" string="Tên tiêu chí" attrs="{'readonly': [('id', '!=', False)]}" options="{'no_open': True}"/>
+                                        <field name="description" string="Mô tả" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name="rating_weight" string="Trọng số đánh giá" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name="score" string="Điểm đánh giá"/>
+                                        <field name="total_score" string="Tổng điểm" readonly="1" />
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_score" string="Tổng điểm" readonly="1"/>
+                                    <field name="average_score" string="Điểm trung bình" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    <!-- HR -->
+        <record id="tk_hr_review_view_form" model="ir.ui.view">
+            <field name="name">tk_recruitment_review_view_form</field>
+            <field name="model">tk_recruitment_hr.review</field>
+            <field name="arch" type="xml">
+                <form string="Review">
+                    <sheet>
+                        <group string="Nhóm tiêu chí">
+                            <group>
+                                <field name="create_uid" />
+                                <field name="created_at" />
+                                <field name="order" />
+                                <field name="active" />
+                                <field name="set_criterias_id" domain="[('name','!=',''),('type','=','H')]" widget="selection"/>
+                            </group>
+                            <!-- <group>
+                                <field name="applicant_id" options="{'no_create': True,'no_open': True}"/>
+                                <field name="applicant_partner_name" readonly="1"/>
+                                <field name="applicant_company" readonly="1" options="{'no_open': True}"/>
+                                <field name="applicant_department" readonly="1" options="{'no_open': True}"/>
+                                <field name="applicant_job" readonly="1" options="{'no_open': True}"/>
+                            </group> -->
+                        </group>
+                        <group>
+                            <field name="description" string="Mô tả" />
+                        </group>
+                        <notebook>
+                            <page name="criterias" string="Tiêu chí đánh giá">
+                                <field name="reivew_line_ids" type="xml">
+                                    <tree string="Criterias" editable="bottom" delete="false" create="false">
+                                        <field name="group_criterias_id" attrs="{'readonly': [('id', '!=', False)]}" options="{'no_open': True}"/>
+                                        <field name="criterias_id" attrs="{'readonly': [('id', '!=', False)]}" options="{'no_open': True}"/>
+                                        <field name="description" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name="rating_weight" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name="score"/>
+                                        <field name="total_score" readonly="1" />
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_score" readonly="1"/>
+                                    <field name="average_score" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+<!-- Tree View -->
+    <record id="tk_recruitment_hr_review_view_tree" model="ir.ui.view">
+        <field name="name">tk_recruitment_hr_review_view_tree</field>
+        <field name="model">tk_recruitment_hr.review</field>
+        <field name="arch" type="xml">
+            <tree default_order='order' >
+                <field name="order" string="Thứ tự"/>
+                <field name="create_uid" string="Người đánh giá"/>
+                <!-- <field name="applicant_partner_name" string="Người ứng tuyển"/>
+                <field name="applicant_company" string="Công ty"/>
+                <field name="applicant_job" string="Vị trí"/> -->
+                <field name="total_score" string="Tổng điểm"/>
+                <field name="average_score" string="Điểm trung bình"/>
+                <field name="description" string="Mô tả"/>
+                <field name="active" string="Trạng thái"/>
+            </tree>
+        </field>
+    </record>
+<!-- Action and menu -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_review_action" model="ir.actions.act_window">
+            <field name="name">Đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.review</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','R')]</field>
+            <field name="context">{'default_type':'R'}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_recruitment_hr_review_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_recruitment_review_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_recruitment_hr_review_menu"
+            name="Đánh giá"
+            parent="tk_recruitment_menu"
+            action="tk_recruitment_review_action"/>
+    <!-- HR -->
+        <record id="tk_hr_review_action" model="ir.actions.act_window">
+            <field name="name">Đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.review</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','H')]</field>
+            <field name="context">{'default_type':'H'}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_recruitment_hr_review_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_hr_review_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_hr_review_menu"
+            name="Đánh giá"
+            parent="tk_hr_menu"
+            action="tk_hr_review_action"/>
+    </data>
+</odoo>

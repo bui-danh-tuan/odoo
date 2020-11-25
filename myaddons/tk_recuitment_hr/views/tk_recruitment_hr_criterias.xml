@@ -1,0 +1,152 @@
+<odoo>
+<!-- Search View -->
+    <record id="tk_recruitment_hr_criterias_view_search" model="ir.ui.view">
+        <field name="name">tk_recruitment_hr_criterias_view_search</field>
+        <field name="model">tk_recruitment_hr.criterias</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Tên tiêu chí"/>
+                <field name="group_criterias_id" string="Nhóm tiêu chí" />
+                <field name="description" string="Mô tả" />
+                <filter string="Các tiêu chí không hoạt động" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By" name = "group by type">
+                    <filter string="Nhóm tiêu chí" 
+                    context="{'group_by': 'group_criterias_id', }"
+                    help="Type"/>
+                </group>
+                <group expand="0" string="Group By" name = "group by status">
+                    <filter string="Trạng thái" 
+                    context="{'group_by': 'active', }"
+                    help="Status"/>
+                </group>
+            </search>
+        </field>
+    </record>
+<!-- Tree View -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_criterias_view_tree" model="ir.ui.view">
+            <field name="name">tk_recruitment_criterias_view_tree</field>
+            <field name="model">tk_recruitment_hr.criterias</field>
+            <field name="arch" type="xml">
+                <tree default_order='order' editable="bottom">
+                    <field name="order" string="STT" />
+                    <field name="name" string="Tên tiêu chí"/>
+                    <field name="group_criterias_id" string="Nhóm tiêu chí" options="{'no_create': True,'no_open': True}" domain="[('name','!=',''),('type','=','R')]"/>
+                    <field name="description" string="Mô tả"/>
+                    <field name="active" string="Trạng thái"/>
+                    <!-- <field name="active_" string="Trạng thái"/> -->
+                    <!-- <field name="active" string="Hiển thị" />
+                    <field name="active_group" string="Hiển thị nhóm"/> -->
+                </tree>
+            </field>
+        </record>
+    <!-- HR -->
+        <record id="tk_hr_criterias_view_tree" model="ir.ui.view">
+            <field name="name">tk_hr_criterias_view_tree</field>
+            <field name="model">tk_recruitment_hr.criterias</field>
+            <field name="arch" type="xml">
+                <tree default_order='order' editable="bottom">
+                    <field name="order" string="STT" />
+                    <field name="name" string="Tên tiêu chí"/>
+                    <field name="group_criterias_id" string="Nhóm tiêu chí" options="{'no_create': True,'no_open': True}" domain="[('name','!=',''),('type','=','H')]"/>
+                    <field name="description" string="Mô tả"/>
+                    <field name="active" string="Trạng thái"/>
+                    <!-- <field name="active_" string="Trạng thái"/> -->
+                    <!-- <field name="active" string="Hiển thị" />
+                    <field name="active_group" string="Hiển thị nhóm"/> -->
+                </tree>
+            </field>
+        </record>
+    </data>
+<!-- Form View -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_criterias_view_form" model="ir.ui.view">
+            <field name="name">Criterias</field>
+            <field name="model">tk_recruitment_hr.criterias</field>
+            <field name="arch" type="xml">
+                <form string="Criterias">
+                    <sheet>
+                        <group string="Tiêu chí">
+                            <group>
+                                <field name="group_criterias_id" string="Nhóm tiêu chí" widget="selection" domain="[('type','=','R')]"/>
+                                <field name="name" string="Tên tiêu chí"/>
+                                <field name="order" string="Thứ tự"/>
+                                <field name="active" string="Trạng thái"/>
+                            </group>
+                        </group>
+                            <group>
+                                <field name="description" string="Mô tả" />
+                            </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    <!-- HR -->
+        <record id="tk_hr_criterias_view_form" model="ir.ui.view">
+            <field name="name">Criterias</field>
+            <field name="model">tk_recruitment_hr.criterias</field>
+            <field name="arch" type="xml">
+                <form string="Criterias">
+                    <sheet>
+                        <group string="Tiêu chí">
+                            <group>
+                                <field name="group_criterias_id" string="Nhóm tiêu chí" widget="selection"  domain="[('type','=','H')]"/>
+                                <field name="name" string="Tên tiêu chí"/>
+                                <field name="order" string="Thứ tự"/>
+                                <field name="active" string="Trạng thái"/>
+                            </group>
+                        </group>
+                            <group>
+                                <field name="description" string="Mô tả" />
+                            </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+<!-- Action and menu -->
+    <data>
+    <!-- Recruitment -->
+        <record id="tk_recruitment_criterias_action" model="ir.actions.act_window">
+            <field name="name">Tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('group_criterias_id.type','=','R')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_recruitment_criterias_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_recruitment_criterias_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_recruitment_criterias_menu"
+            name="Tiêu chí đánh giá"
+            parent="tk_recruitment_menu"
+            action="tk_recruitment_criterias_action"/>
+    <!-- HR -->
+        <record id="tk_hr_criterias_action" model="ir.actions.act_window">
+            <field name="name">Tiêu chí đánh giá</field>
+            <field name="res_model">tk_recruitment_hr.criterias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('group_criterias_id.type','=','H')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tk_hr_criterias_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('tk_hr_criterias_view_form')})]"/>
+        </record>
+        <menuitem
+            id="tk_hr_criterias_menu"
+            name="Tiêu chí đánh giá"
+            parent="tk_hr_menu"
+            action="tk_hr_criterias_action"/>
+    </data>
+</odoo>
