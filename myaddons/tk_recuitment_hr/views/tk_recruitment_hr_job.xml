@@ -18,7 +18,7 @@
                             <field name="name" />
                             <field name="company_id" options="{'no_create': True,'no_open': True}"/>
                             <field name="department_id" domain="[('company_id', '=', company_id)]" options="{'no_create': True,'no_open': True}"/>
-                            <field name="set_criterias_id" domain="[('name','!=','')]"/>
+                            <field name="set_criterias_id" domain="[('name','!=',''),('type','=','R')]"/>
                         </group>
                         <group>
                             <field name="create_uid" />

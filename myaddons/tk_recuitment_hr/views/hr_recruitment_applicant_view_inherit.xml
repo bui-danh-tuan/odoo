@@ -4,16 +4,41 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
+            <xpath expr="//button[@name='reset_applicant']" position="after">
+                <button string="Review" name="review" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Interview')]}"/>
+                <button string="Send mail" name="send_mail" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Send Mail')]}"/>
+            </xpath>
             <xpath expr="//field[@name='reference']" position="attributes">
                 <attribute name="string">Source detail</attribute>
                 <attribute name="attrs">{'invisible': [('name_source', '=', 'Employee')]}</attribute>
             </xpath>
             <xpath expr="//field[@name='reference']" position="after">
                 <field name="name_source" invisible="1" />
+                <field name="name_stage" invisible="1" />
                 <field name="employee_id" attrs="{'invisible': [('name_source', '!=', 'Employee')]}"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
-                <field name="set_criterias_id" />
+                <field name="set_criterias_id" domain="[('name','!=',''),('type','=','R')]"/>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <data attrs="{'invisible': [('name_stage','in',('CV','Selected'))]}">
+                    <group string="Bản đánh giá">
+                        <field name="reivew_line_ids" type="xml" attrs="{'readonly': [('name_stage','!=','Interview')]}">
+                            <tree string="Criterias" editable="bottom" delete="false" create="false">
+                                <field name="group_criterias_id" string="Nhóm tiêu chí" options="{'no_open': True}"/>
+                                <field name="criterias_id" string="Tên tiêu chí" options="{'no_open': True}"/>
+                                <field name="description" string="Mô tả" />
+                                <field name="rating_weight" string="Trọng số đánh giá" />
+                                <field name="score" string="Điểm đánh giá"/>
+                                <field name="total_score" string="Tổng điểm" readonly="1" />
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2">
+                            <field name="total_score" string="Tổng điểm" readonly="1"/>
+                            <field name="average_score" string="Điểm trung bình" readonly="1"/>
+                        </group>
+                    </group>
+                </data>
             </xpath>
         </field>
     </record>
