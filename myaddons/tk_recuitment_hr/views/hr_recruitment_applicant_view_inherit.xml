@@ -5,8 +5,8 @@
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='reset_applicant']" position="after">
-                <button string="Review" name="review" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Interview')]}"/>
-                <button string="Send mail" name="send_mail" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Send Mail')]}"/>
+                <button string="Send mail" name="action_send_mail" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Send Mail')]}"/>
+                <button string="print pdf" name="action_print_pdf" type="object" class="oe_highlight" attrs="{'invisible': [('name_stage','!=','Send Mail')]}"/>
             </xpath>
             <xpath expr="//field[@name='reference']" position="attributes">
                 <attribute name="string">Source detail</attribute>

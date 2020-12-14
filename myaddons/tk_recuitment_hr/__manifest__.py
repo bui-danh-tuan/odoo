@@ -22,7 +22,8 @@
     # any module necessary for this one to work correctly
     'depends': [
         'base',
-        'hr_recruitment'
+        'hr_recruitment',
+        'mail'
         ],
 
     # always loaded
@@ -38,6 +39,7 @@
         'views/tk_recruitment_hr_job.xml',
         'views/hr_job_view_inherit.xml',
         'views/hr_recruitment_applicant_view_inherit.xml',
+        'report/review_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
