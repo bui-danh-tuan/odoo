@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Action -->
+        <record id="action_create_op_batch_free" model="ir.actions.act_window">
+            <field name="name">Học thử miễn phí</field>
+            <field name="res_model">op.batch.free</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- From View -->
+        <record id="view_create_op_batch_free_from" model="ir.ui.view">
+            <field name="name">Học thử miễn phí</field>
+            <field name="model">op.batch.free</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!-- <button name="action_confirm" groups='op_batch_free.group_creator' type="object" string="Confirm" class="oe_highlight" />
+                        <button name="action_done" groups='op_batch_free.group_assessor' type="object" state='confirm' string="Done" class="oe_highlight" /> -->
+                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" />
+                        <button name="action_done" type="object" state='confirm' string="Done" class="oe_highlight" />
+                        <button name="action_cancel" state="confirm" type="object" string="Cancel" class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_create_request" type="object" class="oe_stat_button" icon="fa-pencil-square-o" groups="odoo_training_management_app.group_training_user">
+                                <field string="Request" name="request_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1 class="o_row">Buổi thử miễn phí</h1>
+                        </div>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="description" />
+                        </group>
+                        <group>
+                            <group>
+                                <field name='course_id' required="1"/>
+                                <field name='student_max' required="1"/>
+                                <field name='faculty_id' required="1"/>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                                <field name='link_batch' required="1"/>
+                            </group>
+                            <group>
+                                <field name='start_datetime' required="1"/>
+                                <field name='end_datetime' required="1"/>
+                                <field name='duration_datetime'/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Tree View -->
+        <record id="view_create_op_batch_free_tree" model="ir.ui.view">
+            <field name="name">op.batch.free.tree</field>
+            <field name="model">op.batch.free</field>
+            <field name="arch" type="xml">
+                <tree string="Lớp học thử miễn phí">
+                    <field name="name" />
+                    <field name="course_id" />
+                    <field name="start_datetime" />
+                    <field name="end_datetime" />
+                    <field name="faculty_id" />
+                    <field name="student_max" />
+                    <field name="partner_ids" widget="many2many_tags" />
+                    <field name="state" />
+                    <field name="link_batch" />
+                </tree>
+            </field>
+        </record>
+    </data>
+    <!-- Cron -->
+    <data noupdate="1">
+        <record id="op_batch_free_cron_auto_done" model="ir.cron">
+            <field name="name">Op Batch Free: Auto cancel batch</field>
+            <field name="model_id" ref="model_op_batch_free"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_auto_done_batch_free()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>

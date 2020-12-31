@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    
+    <menuitem id="op_batch_free_topmenu" name="Free Batch" web_icon="odoo_training_management_app,static/description/icon.png"/>
+    
+    <menuitem id="op_batch_free_submenu" name="Free Batch" 
+	  	parent="op_batch_free_topmenu" action="op_batch_free.action_create_op_batch_free" sequence='1'/>
+    
+    <menuitem id="op_batch_request_submenu" name="Request Join Batch" 
+	  	parent="op_batch_free_topmenu" action="op_batch_free.action_op_request_join_batch" sequence='2'/>
+      
+  </data>
+</odoo>

@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class review(models.Model):
     
     _name = "tk_recruitment_hr.review"
-    _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
+    _inherit = ['mail.thread']
 
     name = fields.Char('Bản đánh giá',default='Bản đánh giá')
     

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Action -->
+        <record id="action_op_request_join_batch" model="ir.actions.act_window">
+            <field name="name">Đăng kí học thử miễn phí</field>
+            <field name="res_model">op.request.join.batch</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- From View -->
+        <record id="view_op_request_join_batch_from" model="ir.ui.view">
+            <field name="name">Học thử miễn phí</field>
+            <field name="model">op.request.join.batch</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_approve" type="object" string="Approve" class="oe_highlight" />
+                        <button name="action_cancel" type="object" string="Cancel" class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="new,approve,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1 class="o_row">
+                                <field name="name" force_save="1" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="batch_free_id" required="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name='partner_id' required="1"/>
+                                <field name='repuest_datetime' force_save="1" readonly="1"/>
+                                <field name='faculty_id' force_save="1" readonly="1"/>
+                                <field name='course_id' force_save="1" readonly="1"/>
+                                <field name='student_max' force_save="1" readonly="1"/>
+                                <field name='link_batch' force_save="1" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name='start_datetime' force_save="1" readonly="1"/>
+                                <field name='end_datetime' force_save="1" readonly="1"/>
+                                <field name='duration_datetime' force_save="1" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Tree View -->
+        <record id="view_op_request_join_batch_tree" model="ir.ui.view">
+            <field name="name">op.request.join.batch.tree</field>
+            <field name="model">op.request.join.batch</field>
+            <field name="arch" type="xml">
+                <tree string="Lớp học thử miễn phí">
+                    <field name="partner_id" />
+                    <field name="batch_free_id" />
+                    <field name="course_id" />
+                    <field name="start_datetime" />
+                    <field name="end_datetime" />
+                    <field name="repuest_datetime" />
+                    <field name="state" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
